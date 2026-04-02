@@ -23,7 +23,7 @@
   },
   "scripts": {
     "fix": "oxfmt -c config/oxfmt.json && oxlint -c config/oxlint.json --fix && tsc --noEmit",
-    "build": "rm -rf dist/* && bun build $(find . -name '*.ts' -not -path './node_modules/*' | sort) --outdir ./dist $(find . -name '*.ts' -not -path './node_modules/*' | grep -v index.ts | sed 's/.ts$/.js/' | sed 's/^/--external /') && tsc --emitDeclarationOnly"
+    "build": "rm -rf dist/* && bun build $(find . -name '*.ts' -not -path './node_modules/*' -not -path './test/*' -not -path './cast/*' | sort) --outdir ./dist $(find . -name '*.ts' -not -path './node_modules/*' -not -path './test/*' -not -path './cast/*' | grep -v index.ts | sed 's/.ts$/.js/' | sed 's/^/--external /') && tsc --emitDeclarationOnly"
   },
   "dependencies": {
     "ai": "^6.0.142",
