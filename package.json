@@ -1,0 +1,20 @@
+{
+  "name": "sagent",
+  "version": "0.0.0",
+  "description": "",
+  "homepage": "https://github.com/aquaticcalf/sagent#readme",
+  "bugs": {
+    "url": "https://github.com/aquaticcalf/sagent/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aquaticcalf/sagent.git"
+  },
+  "license": "MIT",
+  "author": "aquaticcalf",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
