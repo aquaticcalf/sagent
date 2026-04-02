@@ -6,15 +6,28 @@
   "bugs": {
     "url": "https://github.com/aquaticcalf/sagent/issues"
   },
+  "license": "MIT",
+  "author": "aquaticcalf",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aquaticcalf/sagent.git"
   },
-  "license": "MIT",
-  "author": "aquaticcalf",
-  "type": "commonjs",
-  "main": "index.js",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "fix": "oxfmt -c config/oxfmt.json && oxlint -c config/oxlint.json --fix && tsc --noEmit",
+    "build": "rm -rf dist/* && bun build $(find . -name '*.ts' -not -path './node_modules/*' | sort) --outdir ./dist $(find . -name '*.ts' -not -path './node_modules/*' | grep -v index.ts | sed 's/.ts$/.js/' | sed 's/^/--external /') && tsc --emitDeclarationOnly"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.43.0",
+    "oxlint": "^1.58.0",
+    "typescript": "^6.0.2"
   }
 }
