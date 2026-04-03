@@ -17,28 +17,35 @@ to pull that off, it needs a few things :
 - loop, so it can keep going until the job is done
 - tools, so it can actually _do_ things and not just talk about them
 - awareness, so it knows what's happening around it and not just what you said
-  
+
+### wow, that sounds fun! i want to build one too
+
+it really is fun! 
+
+but when you actually sit down to code one from scratch, 
+
+you quickly realize that it is such a hassle.
+
+sending a single message to an ai model is easy, 
+
+but building a real agent that can loop, remember things, and use tools requires a lot of extra "glue" code.
+
+instead of focusing on the cool parts like making your agent smart or building out your app's unique features, 
+
+you get bogged down trying to make all the moving parts talk to each other.
+
+you can easily waste hours or days just trying to figure out the basic background infrastructure for annoying chores, like:
+
+- remembering the chat history between messages
+- making the text stream smoothly into your ui
+- tracking exactly when a tool starts working and when it finishes
+- figuring out how to stop the agent mid sentence ( for the stop button )
+- pausing the agent so a human can approve an action ( like sending an email )
+- organizing and loading your different prompt files ( the so called "skills" )
+
 ```bash
 bun add sagent
 ```
-
-`sagent` gives you the pieces you usually end up wiring yourself eventually, while agenting.
-
-these are for problems you keep solving over and over again.
-
-i am talking about problems like 
-
-- keeping the chat transcript alive across turns
-- streaming partial text from assistant into a ui
-- knowing when tool execution starts and finishes
-- interrupting a run
-- injecting a control message into the next turn
-- gating tool calls behind approval
-- loading skill prompt files
-
-etc.
-
-`sagent` gives you a simple api that handles these problems.
 
 ### simple example
 
