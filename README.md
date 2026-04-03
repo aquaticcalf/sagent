@@ -34,6 +34,21 @@ let's say you want to build a simple agent that translates regular conversationa
 this is how you'd do that using `sagent`.
 
 ```ts
+import { Agent } from "sagent"
+import { openai } from "@ai-sdk/openai"
 
+const agent = new Agent({
+  model: openai("gpt-5.4"),
+  system: "rewrite casual english as clear, polished workplace language. keep the original meaning, keep it concise, and output only the rewritten sentence.",
+})
+
+const result = await agent.prompt("hey can you finish this soon?")
+
+console.log(result?.text)
+```
+
+```txt
+# output
+Could you please complete this at your earliest convenience?
 ```
 
