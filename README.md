@@ -53,7 +53,7 @@ but, that's where `sagent` comes in.
 
 `sagent` is a typescript library that makes building agents easy and intuitive.
 
-with this, you can save the hours and days of battling with the agent infrastructure and use that time focus on actual cool features instead.
+with this library, you can save the hours and days of battling with the agent infrastructure and use that time focus on actual cool features instead.
 
 > [!warning]
 > this readme is work in progress, the below parts might not be up to date
