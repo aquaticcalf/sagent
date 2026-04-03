@@ -43,6 +43,10 @@ you can easily waste hours or days just trying to figure out the basic backgroun
 - pausing the agent so a human can approve an action ( like sending an email )
 - organizing and loading your different prompt files ( the so called "skills" )
 
+> [!warning]
+> this readme is work in progress, the below parts might not be up to date
+
+
 ```bash
 bun add sagent
 ```
