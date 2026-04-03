@@ -26,3 +26,14 @@ etc.
 
 `sagent` gives you a simple api that handles these problems.
 
+### simple example
+
+let's say you want to build a simple agent that translates regular conversational english into corporate speak.
+
+
+this is how you'd do that using `sagent`.
+
+```ts
+
+```
+
