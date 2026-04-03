@@ -34,7 +34,7 @@ instead of focusing on the cool parts like making your agent smart or building o
 
 you get bogged down trying to make all the moving parts talk to each other.
 
-you can easily waste hours or days just trying to figure out the basic background infrastructure for annoying chores, like:
+you can easily waste hours or days just trying to figure out the basic background infrastructure for annoying chores, like :
 
 - remembering the chat history between messages
 - making the text stream smoothly into your ui
