@@ -43,7 +43,7 @@ you can easily waste hours or days just trying to figure out the basic backgroun
 - pausing the agent so a human can approve an action ( like sending an email )
 - organizing and loading your different prompt files ( the so called "skills" )
 
-### shucks, so i can't make one 😔
+### so i can't make one? 😔
 
 who said that?
 
