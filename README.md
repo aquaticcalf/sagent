@@ -2,7 +2,7 @@
 
 a simple runtime agnostic* library for agenting
 
-*well, largely agnostic. the compatibility depends on your chosen bundler, model provider, and registered tools.
+<sub>*well, largely agnostic. the compatibility depends on your chosen bundler, model provider, and registered tools.</sub>
 
 ```bash
 bun add sagent
