@@ -57,3 +57,24 @@ that was easy, right?
 an interesting thing to notice here is `sagent` is built on top of [`Vercel's ai sdk`](https://ai-sdk.dev/).
 
 so, any ai-sdk-compatible model provider is supported by `sagent`.
+
+---
+
+now let's talk about the big question that's bothering you and me.
+
+what is an _agent_? explain like i am five
+
+an agent is just a piece of software that handles multi step tasks.
+
+so instead of spitting out a single response and being done like in our simple example, a real agent can loop.
+
+loop as in - it can take input, decide what to do, use tools if needed, and keep going based on what happens.
+
+so an agent should be able to :
+
+- hold state across turns
+- run in a controlled loop
+- use tools when it makes sense
+- react to immediate results, instead of always waiting for user's response 
+
+in `sagent`, the `Agent` class manages this loop and the runtime state.
