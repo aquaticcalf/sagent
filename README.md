@@ -1,6 +1,6 @@
 ## sagent 🧘
 
-a simple runtime agnostic* library to simply agenting
+a simple runtime agnostic* library for agenting
 
 *well, largely agnostic. the compatibility depends on your chosen bundler, model provider, and registered tools.
 
