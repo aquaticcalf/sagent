@@ -1,6 +1,6 @@
 ## sagent 🧘
 
-a simple runtime agnostic* library for <b><i>agent</i></b> ing <br>
+a simple runtime agnostic* typescript library for <b><i>agent</i></b> ing <br>
 <sub>*well, largely agnostic. the compatibility depends on your chosen bundler, model provider, and registered tools.</sub>
 
 ### ok, but what is an _agent_ even?
