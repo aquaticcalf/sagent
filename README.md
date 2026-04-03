@@ -58,11 +58,7 @@ an interesting thing to notice here is `sagent` is built on top of [`Vercel's ai
 
 so, any ai-sdk-compatible model provider is supported by `sagent`.
 
----
-
-now let's talk about the big question that's bothering you and me.
-
-what is an _agent_? explain like i am five
+### ok, but what is an _agent_ even?
 
 an agent is just a piece of software that handles multi step tasks.
 
