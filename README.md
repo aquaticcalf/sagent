@@ -56,4 +56,4 @@ that was easy, right?
 
 an interesting thing to notice here is `sagent` is built on top of [Vercel's ai sdk](https://ai-sdk.dev/).
 
-so, any ai sdk compatible model provider is supported by `sagent`.
+so, any ai-sdk-compatible model provider is supported by `sagent`.
