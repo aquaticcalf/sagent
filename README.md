@@ -5,19 +5,19 @@ a simple runtime agnostic* library for <b><i>agent</i></b> ing <br>
 
 ### ok, but what is an _agent_ even?
 
-an agent is just a piece of software that handles multi step tasks.
+an agent is just a piece of software that can handle a task from start to finish.
 
 so instead of spitting out a single response and being done, an agent can loop.
 
 it takes input, decides what to do, uses tools if needed, and keeps going based on what happens.
 
-to do this effectively, an agent needs to be able to :
+to pull that off, it needs a few things :
 
-- hold state across turns
-- run in a controlled loop
-- use tools when it makes sense
-- react to immediate results, instead of always waiting for user's response
-
+- memory, so it remembers what's already happened
+- loop, so it can keep going until the job is done
+- tools, so it can actually _do_ things and not just talk about them
+- awareness, so it knows what's happening around it and not just what you said
+  
 ```bash
 bun add sagent
 ```
