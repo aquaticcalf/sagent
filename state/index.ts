@@ -1,7 +1,17 @@
-import type { LanguageModel, Tool } from "ai"
+import type { LanguageModel, ModelMessage, ToolSet } from "ai"
+import type { SkillFileReader } from "@/prompt"
 
 export interface State {
   system: string
   model: LanguageModel
-  tools: Tool[]
+  tools: ToolSet
+  readfile?: SkillFileReader
+
+  messages: ModelMessage[]
+  pending: string[]
+
+  streaming: boolean
+  draft?: ModelMessage | null
+
+  error?: Error
 }
