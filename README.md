@@ -43,6 +43,18 @@ you can easily waste hours or days just trying to figure out the basic backgroun
 - pausing the agent so a human can approve an action ( like sending an email )
 - organizing and loading your different prompt files ( the so called "skills" )
 
+### shucks, so i can't make one 😔
+
+who said that?
+
+it is hard and annoying to build all the infrastructure yourself.
+
+but, that's where `sagent` comes in.
+
+`sagent` is a typescript library that makes building agents easy and intuitive.
+
+with this, you can save the hours and days of battling with the agent infrastructure and use that time focus on actual cool features instead.
+
 > [!warning]
 > this readme is work in progress, the below parts might not be up to date
 
