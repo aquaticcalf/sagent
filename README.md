@@ -1,4 +1,4 @@
-## sagent
+## sagent 🧘
 
 ```bash
 bun add sagent
