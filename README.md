@@ -38,7 +38,7 @@ import { Agent } from "sagent"
 import { openai } from "@ai-sdk/openai"
 
 const agent = new Agent({
-  model: openai("gpt-5.4"),
+  model: openai("gpt-5.4-nano"),
   system: "rewrite casual english as clear, polished workplace language. keep the original meaning, keep it concise, and output only the rewritten sentence.",
 })
 
