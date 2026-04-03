@@ -55,6 +55,10 @@ but, that's where `sagent` comes in.
 
 with this library, you can save the hours and days of battling with the agent infrastructure and use that time focus on actual cool features instead.
 
+### what, how is that possible?
+
+magic
+
 > [!warning]
 > this readme is work in progress, the below parts might not be up to date
 
