@@ -1,8 +1,22 @@
 ## sagent 🧘
 
-a simple runtime agnostic* library for agenting
-
+a simple runtime agnostic* library for <b><i>agent</i></b> ing <br>
 <sub>*well, largely agnostic. the compatibility depends on your chosen bundler, model provider, and registered tools.</sub>
+
+### ok, but what is an _agent_ even?
+
+an agent is just a piece of software that handles multi step tasks.
+
+so instead of spitting out a single response and being done, an agent can loop.
+
+it takes input, decides what to do, uses tools if needed, and keeps going based on what happens.
+
+to do this effectively, an agent needs to be able to :
+
+- hold state across turns
+- run in a controlled loop
+- use tools when it makes sense
+- react to immediate results, instead of always waiting for user's response
 
 ```bash
 bun add sagent
@@ -57,20 +71,5 @@ that was easy, right?
 an interesting thing to notice here is `sagent` is built on top of [`Vercel's ai sdk`](https://ai-sdk.dev/).
 
 so, any ai-sdk-compatible model provider is supported by `sagent`.
-
-### ok, but what is an _agent_ even?
-
-an agent is just a piece of software that handles multi step tasks.
-
-so instead of spitting out a single response and being done like in our simple example, a real agent can loop.
-
-loop as in - it can take input, decide what to do, use tools if needed, and keep going based on what happens.
-
-so an agent should be able to :
-
-- hold state across turns
-- run in a controlled loop
-- use tools when it makes sense
-- react to immediate results, instead of always waiting for user's response 
 
 in `sagent`, the `Agent` class manages this loop and the runtime state.
