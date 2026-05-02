@@ -1,6 +1,5 @@
 import { Inter } from "next/font/google"
 import { Provider } from "@/components/provider"
-import type { LayoutProps } from "@/lib/layout.shared"
 import "./global.css"
 
 const inter = Inter({
