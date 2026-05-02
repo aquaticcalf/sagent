@@ -27,23 +27,16 @@ Signals are mostly for user experience stuff : spinners, “typing”, progress,
 
 Every moment in an agent's life has a **stage**. Here's the journey:
 
-```
-idle
-  ↓
-message_start      ← You sent a message
-  ↓
-message_update    ← Response is streaming in (this can happen many times!)
-  ↓
-message_end      ← Got the full response
-  ↓
-tool_execution_start  ← Agent decided to use a tool
-  ↓
-tool_execution_end    ← Tool finished
-  ↓
-turn_end          ← One full turn done
-  ↓
-agent_end         ← All done!
-```
+| Stage                  | When / why it fires                                                            |
+| ---------------------- | ------------------------------------------------------------------------------ |
+| `idle`                 | Nothing is happening right now.                                                |
+| `message_start`        | You sent a message and the agent begins a new response.                        |
+| `message_update`       | Response text is streaming in (this can happen many times per message).        |
+| `message_end`          | The full response message is available.                                        |
+| `tool_execution_start` | The agent decided to run a tool.                                               |
+| `tool_execution_end`   | The tool finished and the agent can continue (often back to `message_update`). |
+| `turn_end`             | One full turn is done (message plus any tool work).                            |
+| `agent_end`            | The agent is fully done.                                                       |
 
 If something goes wrong, you might see `aborted` or `error` instead.
 
