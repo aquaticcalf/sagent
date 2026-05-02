@@ -4,6 +4,7 @@ import { gitConfig } from "@/lib/shared"
 export default function HomePage() {
   return (
     <div className="flex flex-1 flex-col items-center justify-center px-6 py-16">
+      <title>sagent</title>
       <h1 className="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">
         sagent <span aria-hidden>🧘</span>
       </h1>
