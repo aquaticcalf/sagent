@@ -1,0 +1,108 @@
+---
+title: Tools
+description: Giving your agent hands
+---
+
+# Tools
+
+An agent that only produces text is nice, but limited.
+
+Tools are how your agent does real work : reading files, calling APIs, searching, sending emails, whatever you want.
+
+The simple picture :
+
+<Mermaid
+  chart={`
+flowchart TD
+  A["Agent decides to act"] --> B["Model writes the tool call"]
+  B --> C["Your code runs"]
+  C --> D["Result goes back to the model"]
+  D --> E["Model writes a final answer"]
+`}
+/>
+
+Tools are just functions. The only special thing is that the model is allowed to choose when to call them.
+
+## What Is a Tool
+
+A tool is a function with a description and a schema for inputs.
+
+The model can decide to call it, and your code runs.
+
+```ts
+const agent = new Agent({
+  model: openai("gpt-5.4-nano"),
+  system: "You can use tools to help the user.",
+  tools: {
+    get_weather: {
+      description: "Get the current weather for a city",
+      parameters: v.object({
+        city: v.string(),
+      }),
+      execute: async ({ city }) => {
+        // This runs when the agent decides to call it
+        return { temperature: 72, conditions: "sunny" }
+      },
+    },
+  },
+})
+```
+
+When the agent decides it needs weather info, it calls `get_weather` and uses the returned data in its response.
+
+## Tools as Skills
+
+You probably have a bunch of prompt files lying around. You could load them manually each time, or...
+
+```ts
+agent.registerskills(["./prompts/summarize.md", "./prompts/translate.md"])
+```
+
+This creates a `skills` tool the agent can use at runtime. It can list what's available and load whichever prompt it needs. No need to hard-code everything.
+
+## Hooks: Sneaking Into Tool Execution
+
+Sometimes you want to observe or control tool calls.
+
+Hooks are the simple way to do that.
+
+### Before a Tool Runs
+
+```ts
+before_tool_call: async (ctx) => {
+  console.log("Running :", ctx.tool.name)
+  // You can even modify the input
+  return { input: sanitize(ctx.input) }
+}
+```
+
+### After It Finishes
+
+```ts
+after_tool_call: async (ctx) => {
+  console.log("Result :", ctx.output)
+}
+```
+
+### If It Fails
+
+```ts
+tool_error: async (ctx) => {
+  console.error("Oops :", ctx.error)
+}
+```
+
+The `ctx` object has:
+
+- `tool.id` - The tool call ID
+- `tool.name` - The tool name
+- `input` - What was passed to the tool
+- `messages` - The conversation so far
+
+You can return early from `before_tool_call` by returning an `{ output }` object. This skips actual tool execution and returns your custom output.
+
+## What's Next
+
+Tools let your agent do things.
+
+Next up : prompts and skills, where you can keep your prompt text out of your TypeScript.

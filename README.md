@@ -20,17 +20,17 @@ to pull that off, it needs a few things :
 
 ### wow, that sounds fun! i want to build one too
 
-it really is fun! 
+it really is fun!
 
-but when you actually sit down to code one from scratch, 
+but when you actually sit down to code one from scratch,
 
 you quickly realize that it is such a hassle.
 
-sending a single message to an ai model is easy, 
+sending a single message to an ai model is easy,
 
 but building a real agent that can loop, remember things, and use tools requires a lot of extra "glue" code.
 
-instead of focusing on the cool parts like making your agent smart or building out your app's unique features, 
+instead of focusing on the cool parts like making your agent smart or building out your app's unique features,
 
 you get bogged down trying to make all the moving parts talk to each other.
 
@@ -62,7 +62,6 @@ magic
 > [!warning]
 > this readme is work in progress, the below parts might not be up to date
 
-
 ```bash
 bun add sagent
 ```
@@ -70,7 +69,6 @@ bun add sagent
 ### simple example
 
 let's say you want to build a simple agent that translates regular conversational english into corporate speak.
-
 
 this is how you'd do that using `sagent`.
 
@@ -80,7 +78,8 @@ import { openai } from "@ai-sdk/openai"
 
 const agent = new Agent({
   model: openai("gpt-5.4-nano"),
-  system: "rewrite casual english as clear, polished workplace language. keep the original meaning, keep it concise, and output only the rewritten sentence.",
+  system:
+    "rewrite casual english as clear, polished workplace language. keep the original meaning, keep it concise, and output only the rewritten sentence.",
 })
 
 const result = await agent.prompt("hey can you finish this soon?")

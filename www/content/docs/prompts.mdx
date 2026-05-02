@@ -1,0 +1,103 @@
+---
+title: Prompts
+description: Keeping your prompts organized
+---
+
+# Prompts
+
+Prompts are the part you will tweak the most.
+
+In the beginning you will hard-code a system prompt in TypeScript. That is fine.
+
+Later you will have ten prompts, then twenty, and they will start leaking into random files.
+
+This page is about keeping that mess under control.
+
+<Mermaid
+  chart={`
+flowchart TD
+  A[You write prompts] --> B[Files]
+  B --> C[Agent can load them]
+  C --> D[Model can pick the right one]
+`}
+/>
+
+## Prompt Files
+
+A prompt file is just markdown with some frontmatter:
+
+```markdown
+---
+name: summarize
+description: Summarize text into bullet points
+---
+
+You are a summarization expert. Take the user's text and summarize it into 3-5 concise bullet points.
+```
+
+- `name` - How you'll refer to it
+- `description` - What it does (useful for listing!)
+- The rest is the actual prompt
+
+## Loading Prompt Files
+
+sagent gives you helpers to load them.
+
+```ts
+import { readskill, listskills } from "sagent"
+
+const readfile = (file) => fs.readFileSync(file, "utf-8")
+
+// See what's available
+const skills = await listskills(["./prompts/summarize.md", "./prompts/translate.md"], readfile)
+// [{ name: "summarize", description: "Summarize text..." }, ...]
+
+// Get the full prompt
+const skill = await readskill("./prompts/summarize.md", readfile)
+console.log(skill.body) // The prompt text
+```
+
+## Using Them in Your Agent
+
+Pass a file reader when creating your agent:
+
+```ts
+const agent = new Agent({
+  model: openai("gpt-5.4-nano"),
+  system: "You are a helpful assistant.",
+  readfile: (file) => fs.readFileSync(file, "utf-8"),
+})
+```
+
+Then register your prompt files as tools:
+
+```ts
+agent.registerskills(["./prompts/summarize.md", "./prompts/translate.md"])
+```
+
+Now the agent can list and load prompts on demand. No need to load everything upfront.
+
+## System Prompts
+
+If your prompt files have more metadata, you can use `listsystems` / `readsystem`:
+
+```markdown
+---
+name: helpful
+description: A helpful assistant
+tags: [general, useful]
+default: true
+---
+
+You are a helpful assistant...
+```
+
+This supports tags and defaults, useful for picking the right prompt based on context.
+
+## Why Bother?
+
+Keeping prompts in files is boring, but it pays off.
+
+1. You can iterate faster : edit markdown, not app code.
+2. You can reuse prompts across agents.
+3. You can let the agent discover prompts at runtime (via `registerskills`).

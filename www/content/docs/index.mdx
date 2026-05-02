@@ -1,0 +1,84 @@
+---
+title: Getting Started
+description: Install and build your first tiny agent
+---
+
+# Getting Started
+
+If you have ever pasted text into ChatGPT and thought, “cool, but I want this inside my app”, you are in the right place.
+
+`sagent` is a small TypeScript wrapper around the AI SDK that helps you build an “agent” without writing a bunch of glue code.
+
+One picture that explains everything :
+
+<Mermaid
+  chart={`
+flowchart TD
+  A["You say something"] --> B["Agent"]
+  B --> C["Model thinks"]
+  C --> D["Optional : run a tool"]
+  D --> E["Model writes the reply"]
+  E --> F["You get text back"]
+`}
+/>
+
+The whole idea : you talk, the agent passes your words to the model, and the model either answers directly or asks to run some of your code first.
+
+## Installation
+
+```bash
+bun add sagent
+```
+
+## Quick Start
+
+This is the smallest useful thing : make an agent, send one message, print the reply.
+
+```ts
+import { Agent } from "sagent"
+import { openai } from "@ai-sdk/openai"
+
+const agent = new Agent({
+  model: openai("gpt-5.4-nano"),
+  system: "You are a helpful assistant.",
+})
+
+const result = await agent.prompt("Hello!")
+
+console.log(result?.text)
+```
+
+## What Is An Agent?
+
+An “agent” is just code that can keep going.
+
+A normal LLM call is one shot : you send text, you get text back.
+
+An agent is allowed to do more than that :
+
+- It can remember what you said earlier (chat history)
+- It can call tools (your code)
+- It can stream output as it generates
+- You can interrupt it (stop button)
+
+`sagent` does not try to be magical. It just packages the annoying plumbing into one place.
+
+## The Small Mental Model
+
+Most beginner confusion comes from one question : “what is the agent actually doing?”
+
+Here is the honest answer:
+
+- You give it a message.
+- It sends the whole conversation to the model.
+- The model replies with text, or decides to call a tool.
+- If a tool is called, your code runs and returns data.
+- The model sees the tool result and continues.
+
+That loop is the “agentic” part.
+
+## Where To Go Next
+
+- Read `Agent` to learn the three ways to get output : `prompt`, `stream`, and `structured`.
+- Read `Tools` to give your agent “hands”.
+- Read `Signals` if you are building a UI and need to know what is happening while the agent runs.

@@ -1,0 +1,158 @@
+---
+title: Agent
+description: Your agent, your rules
+---
+
+# Agent
+
+This is the main thing. `Agent` is a tiny wrapper that keeps your messages, talks to the model, and (optionally) runs tools.
+
+One picture to show how it flows :
+
+<Mermaid
+  chart={`
+flowchart TD
+  A["You call prompt()"] --> B["Agent"]
+  B --> C["Model thinks"]
+  C --> D["Optional : tool runs"]
+  D --> E["Agent returns text"]
+`}
+/>
+
+Think of `Agent` like a helpful assistant you can call from code.
+
+You give it a message, it gives you a reply.
+
+## Starting Out
+
+You create an agent with two required inputs : a model and a system prompt.
+
+```ts
+import { Agent } from "sagent"
+import { openai } from "@ai-sdk/openai"
+
+const agent = new Agent({
+  model: openai("gpt-5.4-nano"),
+  system: "You are a helpful assistant.",
+})
+```
+
+That is enough to start.
+
+## Talking to It
+
+There are three ways to get output from your agent. Pick the one that fits your app.
+
+### Just Ask (prompt)
+
+```ts
+const result = await agent.prompt("What's the weather in Tokyo?")
+console.log(result?.text)
+```
+
+This is the easiest option. It waits for the full response and returns it at once.
+
+If you are new : start with `prompt`.
+
+### Stream It
+
+If you want to see the response as it comes in:
+
+```ts
+const result = await agent.stream("Write me a story")
+
+for await (const chunk of result.textStream) {
+  console.log(chunk) // Text arrives in chunks
+}
+```
+
+This is what you want for a chat UI.
+
+Pair it with `Signals` if you want “typing”, “running tool”, or progress UI.
+
+### Get Structured Data
+
+Sometimes you do not want “best effort text”. You want a specific JSON shape.
+
+You provide a schema, and the model returns data that fits it.
+
+```ts
+const result = await agent.structured(
+  "Extract the user info from: John Doe, john@example.com",
+  v.object({
+    name: v.string(),
+    email: v.string(),
+  }),
+)
+console.log(result?.output) // { name: "John Doe", email: "john@example.com" }
+```
+
+Uses [Valibot](https://valibot.dev/) schemas under the hood.
+
+Tip : Keep schemas small. If you ask for a huge nested object, you will spend your day debugging JSON.
+
+## Controlling the Conversation
+
+### Steer
+
+Sometimes you want to “nudge” the next turn.
+
+`steer` queues a message that will be injected on the next call.
+
+```ts
+agent.steer("Actually, summarize that instead")
+await agent.prompt("")
+```
+
+The queued message will get processed on the next call.
+
+This is mainly useful when you have UI controls like : “rewrite shorter”, “add citations”, “use tool X”.
+
+### Abort
+
+Need to stop something in progress:
+
+```ts
+agent.abort()
+```
+
+Useful for stop buttons or timeouts.
+
+## Hooks: Into Tool Execution
+
+Tools are powerful, but sometimes you want to know what's happening with them:
+
+```ts
+const agent = new Agent({
+  model: openai("gpt-5.4-nano"),
+  system: "You are a helpful assistant.",
+  before_tool_call: async (ctx) => {
+    // Before a tool runs
+    console.log("About to run:", ctx.tool.name)
+  },
+  after_tool_call: async (ctx) => {
+    // After it finishes
+    console.log("Finished:", ctx.output)
+  },
+  tool_error: async (ctx) => {
+    // If it fails
+    console.error("Failed:", ctx.error)
+  },
+})
+```
+
+These hooks let you log, modify tool inputs, or even skip executing the tool and return a custom result.
+
+## Skills: Loading Prompts
+
+If you have a bunch of prompt files lying around:
+
+```ts
+agent.registerskills(["./prompts/summarize.md", "./prompts/translate.md"])
+```
+
+Now the agent can list and load them as tools at runtime. Good for keeping your prompts organized.
+
+## A Note On “State”
+
+The agent stores conversation messages internally. If you want full control, you can also provide an initial `state` when you construct the agent.

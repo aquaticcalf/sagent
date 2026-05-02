@@ -1,0 +1,100 @@
+---
+title: Signals
+description: The heartbeat of your agent
+---
+
+# Signals
+
+If you are building a UI, you quickly run into a simple problem : you need to know what the agent is doing.
+
+Is it still generating? Did it start a tool call? Can you show a spinner? Should the stop button be enabled?
+
+Signals are the event stream for that.
+
+<Mermaid
+  chart={`
+flowchart TD
+  A[Agent started] --> B[Text is coming in]
+  B --> C[Done]
+  B --> D[Tool is running]
+  D --> B
+`}
+/>
+
+Signals are mostly for user experience stuff : spinners, “typing”, progress, and errors.
+
+## The Idea
+
+Every moment in an agent's life has a **stage**. Here's the journey:
+
+```
+idle
+  ↓
+message_start      ← You sent a message
+  ↓
+message_update    ← Response is streaming in (this can happen many times!)
+  ↓
+message_end      ← Got the full response
+  ↓
+tool_execution_start  ← Agent decided to use a tool
+  ↓
+tool_execution_end    ← Tool finished
+  ↓
+turn_end          ← One full turn done
+  ↓
+agent_end         ← All done!
+```
+
+If something goes wrong, you might see `aborted` or `error` instead.
+
+## Why This Matters
+
+Two common uses :
+
+1. UI updates : show streaming text, show “running tool”, show errors
+2. Control flow : disable buttons, implement stop, implement “approve tool call” patterns
+
+## Listening In
+
+```ts
+agent.on(async (signal) => {
+  // Just log what's happening
+  console.log(signal.stage)
+})
+```
+
+Or be more specific:
+
+```ts
+agent.on(async (signal) => {
+  switch (signal.stage) {
+    case "message_start":
+      console.log("Sending your message")
+      break
+    case "message_update":
+      updateChatBubble(signal.text!)
+      break
+    case "message_end":
+      console.log("Got response", signal.message?.content)
+      break
+    case "tool_execution_start":
+      console.log("Running tool", signal.tool?.name)
+      break
+  }
+})
+```
+
+## What's In a Signal
+
+```ts
+interface SignalValue {
+  stage: Stage // Where are we?
+  pending: string[] // Any queued messages?
+  text?: string // Current text (during streaming)
+  message?: ModelMessage // The final message
+  tool?: { id: string; name: string }
+  error?: Error
+}
+```
+
+The `pending` array is tied to steering : you can queue messages ahead of time and they will get processed in order.
